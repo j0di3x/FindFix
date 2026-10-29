@@ -10,19 +10,22 @@ struct FindFixApp: App {
 
     var body: some Scene {
         MenuBarExtra("FindFix", systemImage: "folder.badge.gearshape") {
-            MenuContent(manager: delegate.manager, openSettings: delegate.showSettings)
+            MenuContent(manager: delegate.manager, updater: delegate.updater, openSettings: delegate.showSettings)
         }
     }
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     let manager = FeatureManager.live()
-    private lazy var settings = SettingsWindowController(manager: manager)
+    lazy var updater = Updater(store: manager.store)
+    private lazy var settings = SettingsWindowController(manager: manager, updater: updater)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Hosted unit tests must not install taps or show permission prompts.
         guard ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] == nil else { return }
         manager.activate()
+        updater.schedule()
+        LoginItem.enableOnce()
         // First launch: nothing is on yet, so show where to switch things on.
         if !UserDefaults.standard.bool(forKey: "hasLaunchedBefore") {
             UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
@@ -44,6 +47,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 struct MenuContent: View {
     @ObservedObject var manager: FeatureManager
+    let updater: Updater
     let openSettings: () -> Void
 
     var body: some View {
@@ -52,6 +56,7 @@ struct MenuContent: View {
         Divider()
         Button("Settings…", action: openSettings)
             .keyboardShortcut(",")
+        Button("Check for Updates…") { updater.check(userInitiated: true) }
         Divider()
         Button("Quit FindFix") { NSApp.terminate(nil) }
             .keyboardShortcut("q")

@@ -34,6 +34,21 @@ the event tap is removed.
    (folder icon). While Settings is open it also has a Dock icon. **Done**
    (⌘W) hides the window, and FindFix keeps running in the menu bar.
 
+## Open at login
+
+FindFix adds itself to your login items the first time it runs. Switch it
+off under Settings › Open at login, or in System Settings › General › Login
+Items.
+
+## Updates
+
+FindFix checks GitHub Releases once a day (switch it off under Settings ›
+Updates, or use **Check for Updates…** in the menu). When a new version is
+out, it asks first, then downloads the DMG, checks that the app inside is
+FindFix, newer and has an intact code signature, swaps it in and relaunches.
+Your settings and the Accessibility grant carry over. Updating from 1.0 has to
+be done once by hand, since 1.0 has no updater.
+
 ## Permissions
 
 - **Accessibility**: needed by every feature. FindFix asks for it the first
@@ -65,14 +80,13 @@ artwork is drawn by `Scripts/make-dmg-background.swift`.
 
 ## Releasing
 
-Push a version tag. The `Release` workflow tests, builds the DMG and attaches
-it to a GitHub release:
+1. Bump `MARKETING_VERSION` in the Xcode project.
+2. Build the DMG on a Mac with `Scripts/make-dmg.sh`.
+3. Tag the commit, push the tag and create a GitHub release with the DMG
+   attached. Its name must end in `-arm64.dmg`; the updater looks for that.
 
-```bash
-git tag v1.0 && git push origin v1.0
-```
-
-Bump `MARKETING_VERSION` in the Xcode project before tagging.
+The `Release` workflow can do steps 2–3 on GitHub instead. Run it by hand
+from the Actions tab.
 
 ## Adding a feature
 

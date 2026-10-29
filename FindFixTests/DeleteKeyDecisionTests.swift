@@ -83,4 +83,14 @@ final class DeleteKeyDecisionTests: XCTestCase {
             XCTAssertEqual(decide(flags: flags), .passThrough)
         }
     }
+
+    // The ⌦ event itself becomes Finder's Move to Trash shortcut.
+
+    func testRewriteMakesCommandBackspace() throws {
+        let event = try XCTUnwrap(CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_ForwardDelete), keyDown: true))
+        event.flags = [.maskSecondaryFn, .maskNumericPad]
+        DeleteKeyDecision.rewriteAsMoveToTrash(event)
+        XCTAssertEqual(event.getIntegerValueField(.keyboardEventKeycode), Int64(kVK_Delete))
+        XCTAssertEqual(event.flags.intersection(.shortcutModifiers), .maskCommand)
+    }
 }

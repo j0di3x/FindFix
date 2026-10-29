@@ -17,22 +17,12 @@ protocol EventTapFactory {
     func makeTap(mask: CGEventMask, handler: @escaping EventTapHandler) -> EventTapping?
 }
 
-/// Marks events FindFix posts itself so the tap lets them through untouched.
+/// Marks events FindFix might post itself so the tap lets them through untouched.
 enum SyntheticEvent {
     static let marker: Int64 = 0x4644_4658 // "FDFX"
 
     static func isOwn(_ event: CGEvent) -> Bool {
         event.getIntegerValueField(.eventSourceUserData) == marker
-    }
-
-    static func postKey(_ keyCode: CGKeyCode, flags: CGEventFlags = [], to pid: pid_t) {
-        let source = CGEventSource(stateID: .privateState)
-        for down in [true, false] {
-            guard let event = CGEvent(keyboardEventSource: source, virtualKey: keyCode, keyDown: down) else { continue }
-            event.flags = flags
-            event.setIntegerValueField(.eventSourceUserData, value: marker)
-            event.postToPid(pid)
-        }
     }
 }
 

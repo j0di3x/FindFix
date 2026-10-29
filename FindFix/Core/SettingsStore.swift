@@ -10,6 +10,9 @@ final class SettingsStore {
         static let quitExclusions = "quitOnClose.excludedBundleIDs"
         static let permanentDelete = "finderDeleteKey.permanent"
         static let renameShortcut = "finderRename.shortcut"
+        static let autoCheckUpdates = "updates.autoCheck"
+        static let skippedVersion = "updates.skippedVersion"
+        static let lastUpdateCheck = "updates.lastCheck"
         static func feature(_ id: String) -> String { "feature.\(id).enabled" }
     }
 
@@ -67,5 +70,21 @@ final class SettingsStore {
             cachedShortcut = newValue
             defaults.set(try? JSONEncoder().encode(newValue), forKey: Key.renameShortcut)
         }
+    }
+
+    var autoCheckUpdates: Bool {
+        get { defaults.object(forKey: Key.autoCheckUpdates) as? Bool ?? true }
+        set { defaults.set(newValue, forKey: Key.autoCheckUpdates) }
+    }
+
+    /// A version the user chose to skip: automatic checks stay quiet about it.
+    var skippedVersion: String? {
+        get { defaults.string(forKey: Key.skippedVersion) }
+        set { defaults.set(newValue, forKey: Key.skippedVersion) }
+    }
+
+    var lastUpdateCheck: Date? {
+        get { defaults.object(forKey: Key.lastUpdateCheck) as? Date }
+        set { defaults.set(newValue, forKey: Key.lastUpdateCheck) }
     }
 }
