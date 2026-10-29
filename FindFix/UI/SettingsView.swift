@@ -49,6 +49,10 @@ struct SettingsView: View {
                     options(for: feature)
                 }
             }
+
+            Section("About") {
+                LegalNotice()
+            }
         }
         .formStyle(.grouped)
     }

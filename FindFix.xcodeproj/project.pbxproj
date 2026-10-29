@@ -253,7 +253,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "FindFix asks Finder for the selected items so it can cut, paste and delete them.";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "GPL-3.0-or-later. Based on Vorssaint.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 j0di3x. Includes code © 2026 Vorssaint. GPL-3.0-or-later, no warranty.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -279,7 +279,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "FindFix asks Finder for the selected items so it can cut, paste and delete them.";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "GPL-3.0-or-later. Based on Vorssaint.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 j0di3x. Includes code © 2026 Vorssaint. GPL-3.0-or-later, no warranty.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
