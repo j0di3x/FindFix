@@ -14,6 +14,10 @@ OUT="${1:-$ROOT/dist}"
 WORK="$(mktemp -d "${TMPDIR:-/tmp}/findfix-dmg.XXXXXX")"
 trap 'hdiutil detach "$MOUNT" -quiet 2>/dev/null || true; rm -rf "$WORK"' EXIT
 
+# The app ships the GPL text (shown from Settings › About); keep it identical.
+cmp -s "$ROOT/LICENSE" "$ROOT/FindFix/Resources/LICENSE.txt" || {
+    echo "FindFix/Resources/LICENSE.txt differs from LICENSE" >&2; exit 1; }
+
 echo "▸ Building Release"
 xcodebuild -project "$ROOT/FindFix.xcodeproj" -scheme FindFix -configuration Release \
     -derivedDataPath "$WORK/dd" build -quiet

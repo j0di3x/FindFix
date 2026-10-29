@@ -94,3 +94,24 @@ licensed under GPL-3.0. FindFix reuses and adapts code from:
 Files with adapted code say so in their header. Because of this reuse, FindFix
 is licensed under the **GNU General Public License v3.0 or later**. See
 [LICENSE](LICENSE).
+
+FindFix is an **unofficial** project. It is not affiliated with, endorsed by
+or sponsored by Vorssaint. In line with Vorssaint's
+[trademark policy](https://github.com/vorssaint/vorssaint-utils/blob/main/TRADEMARKS.md),
+it uses its own name, icon, bundle ID and signing, and none of Vorssaint's
+branding.
+
+## Legal
+
+- **No warranty.** FindFix is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY, without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GPL for details.
+  The permanent-delete option removes files for good; use it at your own risk.
+- **Source.** Every release is built from the tagged source in this repository.
+  The app shows its license and a link to this source under Settings › About.
+- **Trademarks.** Apple, Mac, macOS and Finder are trademarks of Apple Inc.,
+  registered in the U.S. and other countries. FindFix is not affiliated with
+  Apple. Vorssaint is a name of its respective owner. Names are used only to
+  describe compatibility and origin.
+- The FindFix icon, mascot and DMG artwork are original works made for this
+  project and are covered by the same license as the code.
