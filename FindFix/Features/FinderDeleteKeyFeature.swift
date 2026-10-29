@@ -12,9 +12,11 @@ final class FinderDeleteKeyFeature: Feature {
     let title = "Delete key in Finder"
     let summary = "⌦ (fn+⌫ on Mac keyboards) moves selected items to the Trash. Text fields keep the key."
     let requiredPermissions: Set<Permission> = [.accessibility]
-    let eventMask = FindFix.eventMask(.keyDown)
+    let eventMask = FindFix.eventMask(.keyDown, .keyUp)
 
     private let store: SettingsStore
+    /// The last ⌦ key-down became ⌘⌫, so its key-up must too.
+    private var rewritingKey = false
 
     init(store: SettingsStore) {
         self.store = store
@@ -23,22 +25,33 @@ final class FinderDeleteKeyFeature: Feature {
     func handle(type: CGEventType, event: CGEvent) -> TapResult {
         let keyCode = event.getIntegerValueField(.keyboardEventKeycode)
         // Cheap checks first: most key presses stop here.
-        guard keyCode == DeleteKeyDecision.forwardDeleteKeyCode,
-              let pid = FinderContext.frontmostFinderPID() else { return .pass }
+        guard keyCode == DeleteKeyDecision.forwardDeleteKeyCode else { return .pass }
+        if type == .keyUp {
+            if rewritingKey {
+                rewritingKey = false
+                DeleteKeyDecision.rewriteAsMoveToTrash(event)
+            }
+            return .pass
+        }
+        guard let pid = FinderContext.frontmostFinderPID() else { return .pass }
         let action = DeleteKeyDecision.decide(finderIsFrontmost: true,
                                               keyCode: keyCode,
                                               flags: event.flags,
                                               focus: FinderContext.focus(inFinder: pid),
                                               deletePermanently: store.permanentDelete)
+        // Holding the key must not delete item after item.
+        let isRepeat = event.getIntegerValueField(.keyboardEventAutorepeat) != 0
         switch action {
         case .passThrough:
+            rewritingKey = false
             return .pass
         case .moveToTrash:
-            DispatchQueue.main.async {
-                SyntheticEvent.postKey(CGKeyCode(kVK_Delete), flags: .maskCommand, to: pid)
-            }
-            return .consume
+            if isRepeat { return .consume }
+            rewritingKey = true
+            DeleteKeyDecision.rewriteAsMoveToTrash(event)
+            return .pass
         case .deletePermanently:
+            if isRepeat { return .consume }
             FinderBridge.queue.async {
                 let urls = FinderBridge.selectionURLs()
                 DispatchQueue.main.async { Self.confirmAndDelete(urls) }

@@ -27,4 +27,12 @@ enum DeleteKeyDecision {
               !focus.isTextInput else { return .passThrough }
         return deletePermanently ? .deletePermanently : .moveToTrash
     }
+
+    /// Turns the ⌦ event into Finder's own Move to Trash shortcut (⌘⌫), in
+    /// place inside the tap. Posting a separate ⌘⌫ to Finder lost the ⌘ on
+    /// some setups, so Finder got a bare ⌫ and beeped.
+    static func rewriteAsMoveToTrash(_ event: CGEvent) {
+        event.setIntegerValueField(.keyboardEventKeycode, value: Int64(kVK_Delete))
+        event.flags = .maskCommand
+    }
 }

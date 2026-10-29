@@ -47,8 +47,11 @@ final class FeatureManager: ObservableObject {
         accessibilityObserver = DistributedNotificationCenter.default().addObserver(
             forName: NSNotification.Name("com.apple.accessibility.api"), object: nil, queue: .main
         ) { [weak self] _ in
-            // The trust flag flips a moment after the notification.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { self?.apply() }
+            // The trust flag flips after the notification, sometimes only
+            // seconds later; one late look left features waiting for good.
+            for delay in [0.5, 2, 5] {
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) { self?.apply() }
+            }
         }
         apply()
     }

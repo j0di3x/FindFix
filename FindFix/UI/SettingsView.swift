@@ -7,6 +7,7 @@ import UniformTypeIdentifiers
 
 struct SettingsView: View {
     @ObservedObject var manager: FeatureManager
+    @ObservedObject var updater: Updater
     let onDone: () -> Void
 
     var body: some View {
@@ -24,8 +25,10 @@ struct SettingsView: View {
             .padding(12)
         }
         .frame(width: 500, height: 660)
+        // Back from System Settings: pick up a new grant even if the system
+        // never announced it.
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
-            manager.objectWillChange.send()
+            manager.apply()
         }
     }
 
@@ -38,6 +41,15 @@ struct SettingsView: View {
                     .font(.caption).foregroundStyle(.secondary)
             }
 
+            Section {
+                Toggle("Open at login", isOn: Binding(get: { LoginItem.isEnabled },
+                                                      set: { LoginItem.setEnabled($0); manager.objectWillChange.send() }))
+                if LoginItem.needsApproval {
+                    Text("Allow FindFix under System Settings › General › Login Items.")
+                        .font(.caption).foregroundStyle(.orange)
+                }
+            }
+
             Section("Permissions") {
                 PermissionRow(title: "Accessibility", permission: .accessibility, manager: manager)
                 PermissionRow(title: "Automation (Finder)", permission: .automation, manager: manager)
@@ -47,6 +59,18 @@ struct SettingsView: View {
                 Section {
                     featureToggle(feature)
                     options(for: feature)
+                }
+            }
+
+            Section("Updates") {
+                Toggle("Check for updates automatically", isOn: Binding(get: { updater.autoCheck },
+                                                                         set: { updater.autoCheck = $0 }))
+                LabeledContent {
+                    Button("Check Now") { updater.check(userInitiated: true) }
+                        .disabled(updater.state == .checking || updater.state == .installing)
+                } label: {
+                    Text(updater.stateMessage.isEmpty ? "Version \(updater.currentVersion)" : updater.stateMessage)
+                        .font(.caption).foregroundStyle(.secondary)
                 }
             }
 

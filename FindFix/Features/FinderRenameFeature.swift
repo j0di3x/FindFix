@@ -5,8 +5,8 @@
 import AppKit
 import Carbon.HIToolbox
 
-/// A chosen shortcut starts renaming the selected Finder item, by sending
-/// Finder its own rename key (Return).
+/// A chosen shortcut starts renaming the selected Finder item, by turning the
+/// key press into Finder's own rename key (Return) inside the tap.
 final class FinderRenameFeature: Feature {
     let id = "finderRename"
     let title = "Rename shortcut in Finder"
@@ -23,10 +23,9 @@ final class FinderRenameFeature: Feature {
     func handle(type: CGEventType, event: CGEvent) -> TapResult {
         guard store.renameShortcut.matches(keyCode: event.getIntegerValueField(.keyboardEventKeycode),
                                            flags: event.flags),
-              let pid = FinderContext.fileFocusedFinderPID() else { return .pass }
-        DispatchQueue.main.async {
-            SyntheticEvent.postKey(CGKeyCode(kVK_Return), to: pid)
-        }
-        return .consume
+              FinderContext.fileFocusedFinderPID() != nil else { return .pass }
+        event.setIntegerValueField(.keyboardEventKeycode, value: Int64(kVK_Return))
+        event.flags = []
+        return .pass
     }
 }

@@ -9,10 +9,12 @@ import SwiftUI
 /// so the only ways out are Done (⌘W), minimizing, or quitting FindFix.
 final class SettingsWindowController: NSObject, NSWindowDelegate {
     private let manager: FeatureManager
+    private let updater: Updater
     private var window: NSWindow?
 
-    init(manager: FeatureManager) {
+    init(manager: FeatureManager, updater: Updater) {
         self.manager = manager
+        self.updater = updater
     }
 
     var isShown: Bool { window?.isVisible == true || window?.isMiniaturized == true }
@@ -32,7 +34,7 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
     }
 
     private func makeWindow() -> NSWindow {
-        let root = SettingsView(manager: manager, onDone: { [weak self] in self?.hide() })
+        let root = SettingsView(manager: manager, updater: updater, onDone: { [weak self] in self?.hide() })
         let window = NSWindow(contentViewController: NSHostingController(rootView: root))
         window.title = "FindFix"
         window.styleMask = [.titled, .miniaturizable]
