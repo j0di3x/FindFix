@@ -17,6 +17,24 @@ Every feature has its own switch, and there is a master switch. Switching one
 off restores the stock behavior at once. When no running feature needs events,
 the event tap is removed.
 
+## Screenshots
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/settings-features.png" alt="FindFix Settings with permissions and a switch for each feature" width="360"></td>
+    <td><img src="docs/screenshots/settings-updates.png" alt="FindFix Settings with the rename shortcut, updates and about sections" width="360"></td>
+  </tr>
+  <tr>
+    <td align="center">Every feature has its own switch</td>
+    <td align="center">Shortcut, updates and license</td>
+  </tr>
+</table>
+
+<p align="center">
+  <img src="docs/screenshots/install.png" alt="FindFix installer window: drag FindFix into Applications" width="480"><br>
+  Drag FindFix into Applications to install
+</p>
+
 ## Install
 
 1. Download `FindFix-<version>-arm64.dmg` from
