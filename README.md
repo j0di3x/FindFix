@@ -34,6 +34,15 @@ the event tap is removed.
    (folder icon). While Settings is open it also has a Dock icon. **Done**
    (⌘W) hides the window, and FindFix keeps running in the menu bar.
 
+## Languages
+
+FindFix follows your Mac's language: English, Arabic, Bengali, French, German,
+Hindi, Hungarian, Indonesian, Portuguese (Brazil), Russian, Slovak and Spanish.
+To use a different one for FindFix only, choose it in System Settings › General
+› Language & Region › Applications. Translations live in
+`FindFix/Localizable.xcstrings` and `FindFix/InfoPlist.xcstrings`; corrections
+are welcome.
+
 ## Open at login
 
 FindFix adds itself to your login items the first time it runs. Switch it

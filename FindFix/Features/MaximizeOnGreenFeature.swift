@@ -10,8 +10,8 @@ import ApplicationServices
 /// restores the old frame. Option-click keeps the native behavior.
 final class MaximizeOnGreenFeature: Feature {
     let id = "maximizeOnGreen"
-    let title = "Maximize on green button"
-    let summary = "The green button fills the desktop area instead of entering full screen. Click again to restore. ⌥-click keeps the macOS behavior."
+    let title = String(localized: "Maximize on green button")
+    let summary = String(localized: "The green button fills the desktop area instead of entering full screen. Click again to restore. ⌥-click keeps the macOS behavior.")
     let requiredPermissions: Set<Permission> = [.accessibility]
     let eventMask = FindFix.eventMask(.leftMouseDown, .leftMouseUp)
 

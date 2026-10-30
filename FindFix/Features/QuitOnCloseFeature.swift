@@ -10,8 +10,8 @@ import ApplicationServices
 /// a few times after the click because a closing window fades out first.
 final class QuitOnCloseFeature: Feature {
     let id = "quitOnClose"
-    let title = "Quit on close"
-    let summary = "The red close button quits the app when its last window closes."
+    let title = String(localized: "Quit on close")
+    let summary = String(localized: "The red close button quits the app when its last window closes.")
     let requiredPermissions: Set<Permission> = [.accessibility]
     let eventMask = FindFix.eventMask(.leftMouseDown)
 

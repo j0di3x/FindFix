@@ -25,11 +25,18 @@ struct SettingsView: View {
             .padding(12)
         }
         .frame(width: 500, height: 660)
+        .environment(\.layoutDirection, Self.layoutDirection)
         // Back from System Settings: pick up a new grant even if the system
         // never announced it.
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             manager.apply()
         }
+    }
+
+    /// Follows the language FindFix actually runs in, so Arabic mirrors.
+    private static var layoutDirection: LayoutDirection {
+        let language = Locale.Language(identifier: Bundle.main.preferredLocalizations.first ?? "en")
+        return language.characterDirection == .rightToLeft ? .rightToLeft : .leftToRight
     }
 
     private var form: some View {
@@ -69,7 +76,7 @@ struct SettingsView: View {
                     Button("Check Now") { updater.check(userInitiated: true) }
                         .disabled(updater.state == .checking || updater.state == .installing)
                 } label: {
-                    Text(updater.stateMessage.isEmpty ? "Version \(updater.currentVersion)" : updater.stateMessage)
+                    Text(updater.stateMessage)
                         .font(.caption).foregroundStyle(.secondary)
                 }
             }
@@ -125,7 +132,7 @@ struct SettingsView: View {
 }
 
 private struct PermissionRow: View {
-    let title: String
+    let title: LocalizedStringKey
     let permission: Permission
     @ObservedObject var manager: FeatureManager
 

@@ -14,7 +14,7 @@ struct ShortcutRecorder: View {
 
     var body: some View {
         HStack {
-            Button(recording ? "Press shortcut…" : shortcut.displayString) {
+            Button(recording ? String(localized: "Press shortcut…") : shortcut.displayString) {
                 recording ? stopRecording() : startRecording()
             }
             .frame(minWidth: 120)

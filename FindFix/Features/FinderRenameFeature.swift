@@ -9,8 +9,8 @@ import Carbon.HIToolbox
 /// key press into Finder's own rename key (Return) inside the tap.
 final class FinderRenameFeature: Feature {
     let id = "finderRename"
-    let title = "Rename shortcut in Finder"
-    let summary = "Your shortcut starts renaming the selected item."
+    let title = String(localized: "Rename shortcut in Finder")
+    let summary = String(localized: "Your shortcut starts renaming the selected item.")
     let requiredPermissions: Set<Permission> = [.accessibility]
     let eventMask = FindFix.eventMask(.keyDown)
 
