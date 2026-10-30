@@ -10,8 +10,8 @@ import Carbon.HIToolbox
 /// text fields both keys work as usual.
 final class FinderCutPasteFeature: Feature {
     let id = "finderCutPaste"
-    let title = "Cut & paste in Finder"
-    let summary = "⌘X then ⌘V moves files. Copying something else cancels the cut."
+    let title = String(localized: "Cut & paste in Finder")
+    let summary = String(localized: "⌘X then ⌘V moves files. Copying something else cancels the cut.")
     let requiredPermissions: Set<Permission> = [.accessibility, .automation]
     let eventMask = FindFix.eventMask(.keyDown)
 

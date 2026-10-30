@@ -78,14 +78,14 @@ final class Updater: ObservableObject {
 
     private func finishCheck(release: Release?, ok: Bool, userInitiated: Bool) {
         guard ok else {
-            state = .failed("Couldn’t reach GitHub.")
-            if userInitiated { Self.inform("Couldn’t check for updates", "GitHub could not be reached. Try again later.") }
+            state = .failed(String(localized: "Couldn’t reach GitHub."))
+            if userInitiated { Self.inform(String(localized: "Couldn’t check for updates"), String(localized: "GitHub could not be reached. Try again later.")) }
             return
         }
         store.lastUpdateCheck = Date()
         guard let release, Release.isNewer(release.version, than: currentVersion) else {
             state = .upToDate
-            if userInitiated { Self.inform("FindFix is up to date", "Version \(currentVersion) is the newest.") }
+            if userInitiated { Self.inform(String(localized: "FindFix is up to date"), String(localized: "Version \(currentVersion) is the newest.")) }
             return
         }
         state = .available(release)
@@ -96,13 +96,13 @@ final class Updater: ObservableObject {
 
     private func offer(_ release: Release, userInitiated: Bool) {
         let alert = NSAlert()
-        alert.messageText = "FindFix \(release.version) is available"
+        alert.messageText = String(localized: "FindFix \(release.version) is available")
         let notes = release.notes.trimmingCharacters(in: .whitespacesAndNewlines)
-        alert.informativeText = "You have \(currentVersion)."
+        alert.informativeText = String(localized: "You have \(currentVersion).")
             + (notes.isEmpty ? "" : "\n\n" + String(notes.prefix(800)))
-        alert.addButton(withTitle: "Install and Relaunch")
-        alert.addButton(withTitle: "Later")
-        if !userInitiated { alert.addButton(withTitle: "Skip This Version") }
+        alert.addButton(withTitle: String(localized: "Install and Relaunch"))
+        alert.addButton(withTitle: String(localized: "Later"))
+        if !userInitiated { alert.addButton(withTitle: String(localized: "Skip This Version")) }
         NSApp.activate(ignoringOtherApps: true)
         switch alert.runModal() {
         case .alertFirstButtonReturn: install(release)
@@ -119,7 +119,7 @@ final class Updater: ObservableObject {
         URLSession.shared.downloadTask(with: release.dmgURL) { location, response, error in
             let result = Result<URL, Error> {
                 guard let location, error == nil, (response as? HTTPURLResponse)?.statusCode == 200 else {
-                    throw UpdateError("The download failed.")
+                    throw UpdateError(String(localized: "The download failed."))
                 }
                 // The download is deleted when this handler returns.
                 let dmg = FileManager.default.temporaryDirectory.appendingPathComponent("FindFix-\(UUID().uuidString).dmg")
@@ -141,21 +141,21 @@ final class Updater: ObservableObject {
 
     var stateMessage: String {
         switch state {
-        case .idle: return ""
-        case .checking: return "Checking…"
-        case .upToDate: return "FindFix is up to date."
-        case let .available(release): return "Version \(release.version) is available."
-        case .installing: return "Installing…"
+        case .idle: return String(localized: "Version \(currentVersion)")
+        case .checking: return String(localized: "Checking…")
+        case .upToDate: return String(localized: "FindFix is up to date.")
+        case let .available(release): return String(localized: "Version \(release.version) is available.")
+        case .installing: return String(localized: "Installing…")
         case let .failed(message): return message
         }
     }
 
     private func offerManualDownload(_ release: Release, reason: String) {
         let alert = NSAlert()
-        alert.messageText = "Couldn’t install the update"
-        alert.informativeText = reason + "\n\nYou can download FindFix \(release.version) and install it yourself."
-        alert.addButton(withTitle: "Open Download Page")
-        alert.addButton(withTitle: "Cancel")
+        alert.messageText = String(localized: "Couldn’t install the update")
+        alert.informativeText = reason + "\n\n" + String(localized: "You can download FindFix \(release.version) and install it yourself.")
+        alert.addButton(withTitle: String(localized: "Open Download Page"))
+        alert.addButton(withTitle: String(localized: "Cancel"))
         NSApp.activate(ignoringOtherApps: true)
         if alert.runModal() == .alertFirstButtonReturn { NSWorkspace.shared.open(release.pageURL) }
     }
@@ -201,13 +201,13 @@ private enum Installer {
         do {
             try run("/usr/bin/ditto", newApp.path, staged.path)
         } catch {
-            throw UpdateError("FindFix can’t write to \(current.deletingLastPathComponent().path). Move it to Applications first.")
+            throw UpdateError(String(localized: "FindFix can’t write to \(current.deletingLastPathComponent().path). Move it to Applications first."))
         }
         do {
             return try fm.replaceItemAt(current, withItemAt: staged) ?? current
         } catch {
             try? fm.removeItem(at: staged)
-            throw UpdateError("The new version couldn’t replace the old one: \(error.localizedDescription)")
+            throw UpdateError(String(localized: "The new version couldn’t replace the old one: \(error.localizedDescription)"))
         }
     }
 
@@ -220,7 +220,7 @@ private enum Installer {
               bundle.bundleIdentifier == bundleID,
               let version = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
               Release.isNewer(version, than: currentVersion)
-        else { throw UpdateError("The download doesn’t contain a newer FindFix.") }
+        else { throw UpdateError(String(localized: "The download doesn’t contain a newer FindFix.")) }
 
         var code: SecStaticCode?
         var requirement: SecRequirement?
@@ -228,7 +228,7 @@ private enum Installer {
               SecRequirementCreateWithString("identifier \"\(bundleID)\"" as CFString, [], &requirement) == errSecSuccess,
               SecStaticCodeCheckValidity(code, SecCSFlags(rawValue: kSecCSCheckAllArchitectures | kSecCSStrictValidate),
                                          requirement) == errSecSuccess
-        else { throw UpdateError("The downloaded app failed its code signature check.") }
+        else { throw UpdateError(String(localized: "The downloaded app failed its code signature check.")) }
     }
 
     private static func run(_ tool: String, _ arguments: String...) throws {
@@ -240,7 +240,7 @@ private enum Installer {
         try process.run()
         process.waitUntilExit()
         guard process.terminationStatus == 0 else {
-            throw UpdateError("\(URL(fileURLWithPath: tool).lastPathComponent) failed (\(process.terminationStatus)).")
+            throw UpdateError(String(localized: "\(URL(fileURLWithPath: tool).lastPathComponent) failed (\(process.terminationStatus))."))
         }
     }
 }

@@ -1,0 +1,76 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSAppleEventsUsageDescription": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يطلب FindFix من Finder العناصر المحددة ليتمكن من قصها ولصقها وحذفها."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FindFix নির্বাচিত আইটেমগুলো কাট, পেস্ট ও মুছতে Finder-এর কাছে সেগুলো চায়।"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FindFix fragt den Finder nach den ausgewählten Objekten, um sie ausschneiden, einfügen und löschen zu können."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FindFix pide a Finder los ítems seleccionados para poder cortarlos, pegarlos y eliminarlos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FindFix demande au Finder les éléments sélectionnés afin de les couper, coller et supprimer."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FindFix चुने गए आइटम को कट, पेस्ट और हटाने के लिए Finder से उनकी जानकारी माँगता है।"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A FindFix a kijelölt elemeket kéri a Findertől, hogy kivághassa, beilleszthesse és törölhesse őket."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FindFix meminta item yang dipilih dari Finder agar dapat memotong, menempel, dan menghapusnya."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O FindFix pede ao Finder os itens selecionados para poder recortá-los, colá-los e apagá-los."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FindFix запрашивает у Finder выбранные объекты, чтобы вырезать, вставлять и удалять их."
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FindFix si od Findera vyžiada vybrané položky, aby ich mohol vystrihnúť, vložiť a vymazať."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

@@ -141,6 +141,17 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
+				bn,
+				de,
+				es,
+				fr,
+				hi,
+				hu,
+				id,
+				"pt-BR",
+				ru,
+				sk,
 			);
 			mainGroup = AA0000000000000000000060;
 			minimizedProjectReferenceProxies = 1;
@@ -252,13 +263,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "FindFix asks Finder for the selected items so it can cut, paste and delete them.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 j0di3x. Includes code © 2026 Vorssaint. GPL-3.0-or-later, no warranty.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_CODE_SIGN_FLAGS = "--requirements $(SRCROOT)/Config/FindFix.req";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.j0di3x.FindFix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -278,13 +290,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "FindFix asks Finder for the selected items so it can cut, paste and delete them.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 j0di3x. Includes code © 2026 Vorssaint. GPL-3.0-or-later, no warranty.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_CODE_SIGN_FLAGS = "--requirements $(SRCROOT)/Config/FindFix.req";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.j0di3x.FindFix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -299,7 +312,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.j0di3x.FindFixTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FindFix.app/Contents/MacOS/FindFix";
@@ -314,7 +327,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.j0di3x.FindFixTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FindFix.app/Contents/MacOS/FindFix";

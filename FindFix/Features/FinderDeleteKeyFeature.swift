@@ -9,8 +9,8 @@ import Carbon.HIToolbox
 /// immediately, after a confirmation.
 final class FinderDeleteKeyFeature: Feature {
     let id = "finderDeleteKey"
-    let title = "Delete key in Finder"
-    let summary = "⌦ (fn+⌫ on Mac keyboards) moves selected items to the Trash. Text fields keep the key."
+    let title = String(localized: "Delete key in Finder")
+    let summary = String(localized: "⌦ (fn+⌫ on Mac keyboards) moves selected items to the Trash. Text fields keep the key.")
     let requiredPermissions: Set<Permission> = [.accessibility]
     let eventMask = FindFix.eventMask(.keyDown, .keyUp)
 
@@ -65,11 +65,11 @@ final class FinderDeleteKeyFeature: Feature {
         let alert = NSAlert()
         alert.alertStyle = .critical
         alert.messageText = urls.count == 1
-            ? "Delete “\(urls[0].lastPathComponent)” immediately?"
-            : "Delete \(urls.count) items immediately?"
-        alert.informativeText = "This can’t be undone. The items will not go to the Trash."
-        alert.addButton(withTitle: "Delete")
-        alert.addButton(withTitle: "Cancel")
+            ? String(localized: "Delete “\(urls[0].lastPathComponent)” immediately?")
+            : String(localized: "Delete \(urls.count) items immediately?")
+        alert.informativeText = String(localized: "This can’t be undone. The items will not go to the Trash.")
+        alert.addButton(withTitle: String(localized: "Delete"))
+        alert.addButton(withTitle: String(localized: "Cancel"))
         NSApp.activate(ignoringOtherApps: true)
         guard alert.runModal() == .alertFirstButtonReturn else { return }
 
@@ -78,7 +78,7 @@ final class FinderDeleteKeyFeature: Feature {
         }
         if !failed.isEmpty {
             let error = NSAlert()
-            error.messageText = "Could not delete \(failed.count) item(s)."
+            error.messageText = String(localized: "Could not delete \(failed.count) item(s).")
             error.informativeText = failed.map(\.path).joined(separator: "\n")
             error.runModal()
         }
