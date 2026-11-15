@@ -1,5 +1,7 @@
 # FindFix
 
+<p align="center"><a href="https://ko-fi.com/j0di3x"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-Ko--fi-FF5E5B?logo=kofi&logoColor=white&style=for-the-badge" alt="Buy me a coffee on Ko-fi"></a></p>
+
 A small native macOS menu bar app (Swift, SwiftUI) that fixes five everyday
 annoyances. macOS 14+, Apple silicon. No Electron, no WebView, no third-party
 packages. With every feature on, it idles at 0% CPU: it listens through one
